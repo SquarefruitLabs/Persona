@@ -24,7 +24,7 @@ off = baseoff + elboff;
 //Target x,y,z coordinates
 x = 20;
 y = 50;
-z = 100;
+z = 80;
 
 //Distance from the origin to the point. 
 //Verify the target is within bounds
@@ -87,6 +87,7 @@ module arm_two()
 	}
 	translate([arm2, baseoff + elboff, 0]) rotate([0,-ess,0]) rotate([0,-eee,0])endEff();
 	if(showArrows) translate([0,off,0])rotate([90,90,0])arrow(20,"red");
+	if(showArrows) translate([arm2/2,off,0])rotate([-90,0,0])rotate([0,90,0])arrow(20, "green");
 }
 
 translate([0,0,30])//color("cyan",0.6)
