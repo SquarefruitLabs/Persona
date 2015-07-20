@@ -7,6 +7,9 @@ use <arrows.scad>;
 arm1 = 100;
 arm2 = 80;
 
+//Set arrows' visibility
+showArrows = true;
+
 //Offset between the base and arm
 baseoff = 50;
 //Offset between the upper and lower arm
@@ -21,7 +24,7 @@ off = baseoff + elboff;
 //Target x,y,z coordinates
 x = 20;
 y = 50;
-z = 50;
+z = 100;
 
 //Distance from the origin to the point. 
 //Verify the target is within bounds
@@ -71,7 +74,7 @@ module arm_one()
 		sphere(r=8,$fn = resolution);
 		translate([arm1,0,0]) sphere(r=8, $fn=resolution);
 	}
-	translate([0,baseoff,0])rotate([90,90,0])arrow(20,"red");
+	if(showArrows) translate([0,baseoff,0])rotate([90,90,0])arrow(20,"red");
 }
 
 //Fore arm
@@ -83,7 +86,7 @@ module arm_two()
 		translate([arm2,0,0]) sphere(r=8, $fn= resolution);
 	}
 	translate([arm2, baseoff + elboff, 0]) rotate([0,-ess,0]) rotate([0,-eee,0])endEff();
-	translate([0,off,0])rotate([90,90,0])arrow(20,"red");
+	if(showArrows) translate([0,off,0])rotate([90,90,0])arrow(20,"red");
 }
 
 translate([0,0,30])//color("cyan",0.6)
@@ -111,11 +114,12 @@ module endEff()
 		sphere(r=8);
 		translate([0,0,-15]) sphere(r=2);
 	}
-	translate([0,0,-10])rotate([90,0,0])arrow(20,"red");
+	if(showArrows) translate([0,0,-10])rotate([90,0,0])arrow(20,"red");
 }
 
 
 //translate([targetx, targety, targetz]) endEff();
+//For debugging - outputs in the console
 module calc_rotation(x,y,arm_num)
 {
 	rot = acos((pow(x,2)+pow(y,2)+pow(arm1,2)-pow(arm2,2))/(2*arm1*sqrt(pow(x,2)+pow(y,2))));
@@ -135,7 +139,7 @@ module base()
 	translate([0,0,-70])cube([80,80,80], center = true);
 	}
 	
-	translate([0,0,-10]) arrow(20, "red");
+	
 }
+if(showArrows) translate([0,0,-10]) arrow(20, "red");
 color("cyan")translate([0,0,30])base();
-
