@@ -2,6 +2,7 @@
 Squarefruit Labs - Persona
 */
 
+use <arrows.scad>;
 //Arm lengths
 arm1 = 100;
 arm2 = 80;
@@ -19,7 +20,7 @@ off = baseoff + elboff;
 
 //Target x,y,z coordinates
 x = 20;
-y = 80;
+y = 50;
 z = 50;
 
 //Distance from the origin to the point. 
@@ -65,28 +66,30 @@ echo("SE", ess, eee);
 //Upper arm, assuming the ball is the shoulder
 module arm_one()
 {
-	translate([0,baseoff,0])hull()
+	color("cyan")translate([0,baseoff,0])hull()
 	{
 		sphere(r=8,$fn = resolution);
 		translate([arm1,0,0]) sphere(r=8, $fn=resolution);
 	}
+	translate([0,baseoff,0])rotate([90,90,0])arrow(20,"red");
 }
 
 //Fore arm
 module arm_two()
 {
-	translate([0,baseoff + elboff,0]) hull()
+	color("cyan") translate([0,baseoff + elboff,0]) hull()
 	{
 		sphere(r=8, $fn=resolution);
 		translate([arm2,0,0]) sphere(r=8, $fn= resolution);
 	}
 	translate([arm2, baseoff + elboff, 0]) rotate([0,-ess,0]) rotate([0,-eee,0])endEff();
+	translate([0,off,0])rotate([90,90,0])arrow(20,"red");
 }
 
-translate([0,0,30])color("cyan",0.6)
+translate([0,0,30])//color("cyan",0.6)
 {
-rotate([0,0,phi - corrangl]) rotate([0,ess,0]) arm_one();
-rotate([0,0,phi - corrangl]) rotate([0,ess,0]) translate([arm1, 0,0]) rotate([0,eee,0]) arm_two();
+	rotate([0,0,phi - corrangl]) rotate([0,ess,0]) arm_one();
+	rotate([0,0,phi - corrangl]) rotate([0,ess,0]) translate([arm1, 0,0]) rotate([0,eee,0]) arm_two();
 }
 
 //Testing purposes only, to mark the final position.
@@ -103,12 +106,12 @@ module vector()
 module endEff()
 {
 	
-	hull()
+	color("cyan") hull()
 	{
 		sphere(r=8);
 		translate([0,0,-15]) sphere(r=2);
 	}
-
+	translate([0,0,-10])rotate([90,0,0])arrow(20,"red");
 }
 
 
@@ -131,24 +134,8 @@ module base()
 	}
 	translate([0,0,-70])cube([80,80,80], center = true);
 	}
+	
+	translate([0,0,-10]) arrow(20, "red");
 }
-color("cyan",0.6)translate([0,0,30])base();
+color("cyan")translate([0,0,30])base();
 
-//
-module actarm1()
-{
-	hull()
-	{
-	sphere(r = 2, center = true);
-	translate([arm1, baseoff + elboff/2, 0]) sphere(r = 2, center = true);
-	}
-}
-
-module actarm2()
-{
-	hull()
-	{
-		translate([0, baseoff + elboff/2, 0])sphere(r = 2, center = true);
-		translate([arm2, baseoff + elboff, 0]) sphere(r=2, center=true);
-	}
-}
