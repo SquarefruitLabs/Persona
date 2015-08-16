@@ -1,4 +1,3 @@
-$fn = 100;
 module arrow(out_rad, arr_color) {
 	in_rad = 10/13*out_rad;
 	thickness = 4/13*out_rad;
@@ -29,6 +28,6 @@ module arrow(out_rad, arr_color) {
 	}
 }
 }
-arrow(10,"red");
+//arrow(100,"red");
 
 

@@ -8,7 +8,7 @@ arm1 = 100;
 arm2 = 80;
 
 //Set arrows' visibility
-showArrows = true;
+showArrows = false;
 
 //Offset between the base and arm
 baseoff = 50;
@@ -16,15 +16,16 @@ baseoff = 50;
 elboff = 20;
 
 //Render resolution. 
+//Number of (linear) segments a circle is divided into. 
 resolution = 40;
 
 off = baseoff + elboff;
 
 
 //Target x,y,z coordinates
-x = 20;
-y = 50;
-z = 80;
+x = 0;
+y = 150;
+z = 0;
 
 //Distance from the origin to the point. 
 //Verify the target is within bounds
@@ -75,6 +76,7 @@ module arm_one()
 		translate([arm1,0,0]) sphere(r=8, $fn=resolution);
 	}
 	if(showArrows) translate([0,baseoff,0])rotate([90,90,0])arrow(20,"red");
+	if(showArrows) translate([arm1/2,baseoff,0])rotate([-90,0,90])arrow(20,"green");
 }
 
 //Fore arm
@@ -85,16 +87,14 @@ module arm_two()
 		sphere(r=8, $fn=resolution);
 		translate([arm2,0,0]) sphere(r=8, $fn= resolution);
 	}
-	translate([arm2, baseoff + elboff, 0]) rotate([0,-ess,0]) rotate([0,-eee,0])endEff();
-	if(showArrows) translate([0,off,0])rotate([90,90,0])arrow(20,"red");
-	if(showArrows) translate([arm2/2,off,0])rotate([-90,0,0])rotate([0,90,0])arrow(20, "green");
+	
+	if(showArrows) 
+	{
+		translate([0,off,0])rotate([90,90,0])arrow(20,"red");
+		translate([arm2/2,off,0])rotate([-90,0,0])rotate([0,90,0])arrow(20, "green");
+	}
 }
 
-translate([0,0,30])//color("cyan",0.6)
-{
-	rotate([0,0,phi - corrangl]) rotate([0,ess,0]) arm_one();
-	rotate([0,0,phi - corrangl]) rotate([0,ess,0]) translate([arm1, 0,0]) rotate([0,eee,0]) arm_two();
-}
 
 //Testing purposes only, to mark the final position.
 module vector()
@@ -115,7 +115,8 @@ module endEff()
 		sphere(r=8);
 		translate([0,0,-15]) sphere(r=2);
 	}
-	if(showArrows) translate([0,0,-10])rotate([90,0,0])arrow(20,"red");
+	if(showArrows) 
+		translate([0,0,-10])rotate([90,0,0])arrow(20,"red");
 }
 
 
@@ -130,7 +131,7 @@ module calc_rotation(x,y,arm_num)
 //End effector
 module base()
 {
-	difference()
+	color("cyan") difference()
 	{
 	minkowski()
 	{
@@ -139,8 +140,17 @@ module base()
 	}
 	translate([0,0,-70])cube([80,80,80], center = true);
 	}
-	
-	
 }
+
 if(showArrows) translate([0,0,-10]) arrow(20, "red");
+	
+
+translate([0,0,30])//color("cyan",0.6)
+{
+	rotate([0,0,phi - corrangl]) rotate([0,ess,0]) arm_one();
+	rotate([0,0,phi - corrangl]) rotate([0,ess,0]) translate([arm1, 0,0]) rotate([0,eee,0]) 
+	{arm_two();
+	translate([arm2, baseoff + elboff, 0]) rotate([0,-ess,0]) rotate([0,-eee,0])endEff();
+	}
+}
 color("cyan")translate([0,0,30])base();
