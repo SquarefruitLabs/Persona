@@ -11,9 +11,12 @@ Set home position
 Compute angles
 Convert to number of steps
 Send out steps to move
-
 */
 
+//Number of steps for 360 deg rotation
+arm1steps = 60000;
+arm2steps = 20000;
+endFsteps = 20000;
 
 
 home = [0,0,0];
@@ -22,8 +25,11 @@ test1 = [45, 45, 90];
 test2 = [0, 90, 180];
 test3 = [30, 60, 120];
 
+diff = 2;
 
-pos = test3;
+echo(diff);
+
+pos = full_up;
 
 
 base_rotation = pos[0];

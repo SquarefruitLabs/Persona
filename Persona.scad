@@ -87,14 +87,16 @@ module arm_two()
 		sphere(r=8, $fn=resolution);
 		translate([arm2,0,0]) sphere(r=8, $fn= resolution);
 	}
-	
-	if(showArrows) 
-	{
-		translate([0,off,0])rotate([90,90,0])arrow(20,"red");
-		translate([arm2/2,off,0])rotate([-90,0,0])rotate([0,90,0])arrow(20, "green");
-	}
+	translate([arm2, baseoff + elboff, 0]) rotate([0,-ess,0]) rotate([0,-eee,0])endEff();
+	if(showArrows) translate([0,off,0])rotate([90,90,0])arrow(20,"red");
+	if(showArrows) translate([arm2/2,off,0])rotate([-90,0,0])rotate([0,90,0])arrow(20, "green");
 }
 
+translate([0,0,30])//color("cyan",0.6)
+{
+	rotate([0,0,phi - corrangl]) rotate([0,ess,0]) arm_one();
+	rotate([0,0,phi - corrangl]) rotate([0,ess,0]) translate([arm1, 0,0]) rotate([0,eee,0]) arm_two();
+}
 
 //Testing purposes only, to mark the final position.
 module vector()
@@ -115,8 +117,7 @@ module endEff()
 		sphere(r=8);
 		translate([0,0,-15]) sphere(r=2);
 	}
-	if(showArrows) 
-		translate([0,0,-10])rotate([90,0,0])arrow(20,"red");
+	if(showArrows) translate([0,0,-10])rotate([90,0,0])arrow(20,"red");
 }
 
 
@@ -140,17 +141,8 @@ module base()
 	}
 	translate([0,0,-70])cube([80,80,80], center = true);
 	}
-}
-
-if(showArrows) translate([0,0,-10]) arrow(20, "red");
 	
-
-translate([0,0,30])//color("cyan",0.6)
-{
-	rotate([0,0,phi - corrangl]) rotate([0,ess,0]) arm_one();
-	rotate([0,0,phi - corrangl]) rotate([0,ess,0]) translate([arm1, 0,0]) rotate([0,eee,0]) 
-	{arm_two();
-	translate([arm2, baseoff + elboff, 0]) rotate([0,-ess,0]) rotate([0,-eee,0])endEff();
-	}
+	
 }
+if(showArrows) translate([0,0,-10]) arrow(20, "red");
 color("cyan")translate([0,0,30])base();

@@ -1,0 +1,11 @@
+Communication via screen. 
+
+The page-load/connect-button starts screen on /dev/pts/X
+
+EXEC screen /dev/ttyACM0 9600
+
+Now the device (ttyACM0) accepts any commands directed to it. As long as the screen is running.
+
+The page needs a disconnect buttton too.
+
+
