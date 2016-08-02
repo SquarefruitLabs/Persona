@@ -1,0 +1,19 @@
+~ Raspi 1
+	Host webpage for robosapien
+	Host webpage for Lights
+	Has wifi
+
+~ Spark 1
+	Control Robosapien
+
+~ Spark 2
+	Control Lights
+
+~ Raspi 2
+	Show tweets/display/screen
+
+~ Raspi 3
+
+~ Arduino Nano
+	Button for ping pong
+	
